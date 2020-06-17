@@ -1,0 +1,9 @@
+Package: com.gilesgc.freemote
+Name: Freemote
+Depends: mobilesubstrate
+Version: 0.0.1
+Architecture: iphoneos-arm
+Description: Bring BTTV emotes to the iOS Twitch app
+Maintainer: gilesgc
+Author: gilesgc
+Section: Tweaks
