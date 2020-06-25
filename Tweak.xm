@@ -3,6 +3,7 @@
 
 static Class EmoteToken, TextToken;
 static FMEmoteManager *emoteManager;
+static NSMutableDictionary<NSString *, TWMessageStringLayerCheermoteAnimatedImageLayer *> *animatedEmoteSync;
 
 NSMutableArray* stringToBTTVTokenizedArray(NSString *string) {
     NSMutableArray *tokens = [[NSMutableArray alloc] init];
@@ -103,8 +104,6 @@ NSMutableArray* substituteBTTVStringsWithEmoteTokens(NSMutableArray *tokens) {
 
 %end
 
-NSMutableDictionary<NSString *, TWMessageStringLayerCheermoteAnimatedImageLayer *> *animatedEmoteSync = [[NSMutableDictionary alloc] init];
-
 %hook TWMessageStringLayerCheermoteAnimatedImageLayer
 
 //For the dictionary, I use the image's address as the key rather than the image itself
@@ -147,4 +146,5 @@ NSMutableDictionary<NSString *, TWMessageStringLayerCheermoteAnimatedImageLayer 
     EmoteToken = objc_getClass("TwitchKit.TWMessageEmoteToken");
     TextToken = objc_getClass("TwitchKit.TWMessageTextToken");
     emoteManager = [[FMEmoteManager alloc] init];
+    animatedEmoteSync = [[NSMutableDictionary alloc] init];
 }
