@@ -2,10 +2,12 @@
 
 @implementation BTTVEmote
 
-- (id)initWithDictData:(NSDictionary *)data {
+- (id)initWithDictData:(NSDictionary *)data emoteType:(EmoteType)type {
     self = [super init];
 
     if(self) {
+        _emoteType = type;
+        
         if(data[@"code"])
             _emoteText = data[@"code"];
         
@@ -20,6 +22,9 @@
             _isAnimated = [data[@"imageType"] isEqualToString:@"gif"];
 
         if(data[@"images"]) {
+            //Emotes like this are ffz emotes, which have IDs that conflict with the default twitch emotes
+            //To make them unique I add "ffz" to the end of the ID
+            _emoteID = [_emoteID stringByAppendingString:@"ffz"];
             if(data[@"images"][@"1x"] && [data[@"images"][@"1x"] isKindOfClass:[NSString class]])
                 _image1x = [NSURL URLWithString:data[@"images"][@"1x"]];
             if(data[@"images"][@"2x"] && [data[@"images"][@"2x"] isKindOfClass:[NSString class]])

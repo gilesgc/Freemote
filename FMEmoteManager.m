@@ -16,8 +16,8 @@
     NSDictionary *bttvGlobalEmoteInfo = [_httpClient bttvGlobalEmotes];
     NSDictionary *ffzGlobalEmoteInfo = [_httpClient ffzGlobalEmotes];
 
-    [self addEmoteInfo:bttvGlobalEmoteInfo toRegistry:_globalEmoteRegistry nameRegistry:_globalEmoteNameRegistry];
-    [self addEmoteInfo:ffzGlobalEmoteInfo toRegistry:_globalEmoteRegistry nameRegistry:_globalEmoteNameRegistry];
+    [self addEmoteInfo:bttvGlobalEmoteInfo toRegistry:_globalEmoteRegistry nameRegistry:_globalEmoteNameRegistry type:BTTVGlobal];
+    [self addEmoteInfo:ffzGlobalEmoteInfo toRegistry:_globalEmoteRegistry nameRegistry:_globalEmoteNameRegistry type:FFZGlobal];
 
     return self;
 }
@@ -30,21 +30,21 @@
     NSDictionary *ffzEmoteInfo = [_httpClient ffzEmoteInformationForChannelID:channelID];
 
     if(bttvEmoteInfo && bttvEmoteInfo[@"channelEmotes"]) {
-        [self addEmoteInfo:bttvEmoteInfo[@"channelEmotes"] toRegistry:_emoteRegistry nameRegistry:_emoteNameRegistry];
-        [self addEmoteInfo:bttvEmoteInfo[@"sharedEmotes"] toRegistry:_emoteRegistry nameRegistry:_emoteNameRegistry];
+        [self addEmoteInfo:bttvEmoteInfo[@"channelEmotes"] toRegistry:_emoteRegistry nameRegistry:_emoteNameRegistry type:BTTV];
+        [self addEmoteInfo:bttvEmoteInfo[@"sharedEmotes"] toRegistry:_emoteRegistry nameRegistry:_emoteNameRegistry type:BTTV];
     }
 
     if(ffzEmoteInfo) {
-        [self addEmoteInfo:ffzEmoteInfo toRegistry:_emoteRegistry nameRegistry:_emoteNameRegistry];
+        [self addEmoteInfo:ffzEmoteInfo toRegistry:_emoteRegistry nameRegistry:_emoteNameRegistry type:FFZ];
     }
 
     [_emoteRegistry addEntriesFromDictionary:_globalEmoteRegistry];
     [_emoteNameRegistry addEntriesFromDictionary:_globalEmoteNameRegistry];
 }
 
-- (void)addEmoteInfo:(NSDictionary *)emoteInfo toRegistry:(NSMutableDictionary *)registry nameRegistry:(NSMutableDictionary *)nameRegistry {
+- (void)addEmoteInfo:(NSDictionary *)emoteInfo toRegistry:(NSMutableDictionary *)registry nameRegistry:(NSMutableDictionary *)nameRegistry type:(EmoteType)type{
     for(NSDictionary *emoteDict in emoteInfo) {
-        BTTVEmote *emote = [[BTTVEmote alloc] initWithDictData:emoteDict];
+        BTTVEmote *emote = [[BTTVEmote alloc] initWithDictData:emoteDict emoteType:type];
         [registry setObject:emote forKey:emote.emoteID];
         [nameRegistry setObject:emote forKey:emote.emoteText];
     }

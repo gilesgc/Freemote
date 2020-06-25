@@ -9,16 +9,8 @@
 - (id)initWithText:(NSString *)text autoModFlags:(id)autoModFlags;
 @end
 
-@interface TWMessageStringLayer : CALayer
-- (void)configureAnimatedImageLayer:(id)arg1 withImageLayerData:(id)arg2 fadeInIfDownloaded:(BOOL)arg3 animatedImageAvailableBlock:(void(^)(void))arg4;
-- (NSArray *)emoteImageLayers;
-@end
-
-@interface TWMessageStringImageData : NSObject
-@property (nonatomic, retain) NSURL *staticURL;
-@end
-
-@interface TWMessageStringImageLayerData : NSObject
-- (CGRect)frame;
-- (void)setFrame:(CGRect)frame;
+@interface TWMessageStringLayerCheermoteAnimatedImageLayer : CALayer
+- (void)setCurrentFrameIndex:(unsigned long long)index;
+- (unsigned long long)currentFrameIndex;
+- (id)animatedImage;
 @end
